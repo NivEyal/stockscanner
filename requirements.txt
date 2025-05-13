@@ -3,8 +3,9 @@ pandas-ta
 numpy
 websockets
 plotly
-streamlit
+streamlit==1.33.0
+urllib3==1.26.16
+requests==2.32.0
 datetime
 alpaca-trade-api
-requests
 tradingview-ta
