@@ -7,5 +7,4 @@ streamlit
 datetime
 alpaca-trade-api
 requests
-tvdatafeed
 tradingview-ta
