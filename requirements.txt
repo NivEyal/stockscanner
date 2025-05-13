@@ -1,0 +1,11 @@
+pandas
+pandas-ta
+numpy
+websockets
+plotly
+streamlit
+datetime
+alpaca-trade-api
+requests
+tvdatafeed
+tradingview-ta
