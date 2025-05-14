@@ -8,15 +8,14 @@ from datetime import datetime, timedelta
 import os
 import time # For retry delay
 from alpaca.data.timeframe import TimeFrame
+from alpaca.trading.client import TradingClient
+from alpaca.trading.requests import MarketOrderRequest
+from alpaca.trading.enums import OrderSide, TimeInForce
 from alpaca.data.historical import StockHistoricalDataClient
+from alpaca.common.exceptions import APIException
+from alpaca.data.timeframe import TimeFrameUnit
 from alpaca.data.requests import StockBarsRequest
 from alpaca.data.enums import Adjustment
-
-# Optional if you need trading:
-from alpaca.trading.client import TradingClient
-from alpaca.trading.enums import OrderSide, TimeInForce
-
-
 class AlpacaData:
     def __init__(self):
         self.api_key = os.environ.get("APCA_API_KEY_ID")
@@ -29,11 +28,11 @@ class AlpacaData:
             raise ValueError("Alpaca API Key/Secret not found. Please set in secrets.toml.")
 
         try:
-            self.rest_api = REST(self.api_key, self.secret_key, base_url=self.base_rest_url)
+            self.rest_api = StockHistoricalDataClient(self.api_key, self.secret_key)
             # Test connection
-            self.rest_api.get_account() 
-            print(f"Successfully connected to Alpaca REST API at {self.base_rest_url}.")
-        except APIError as e:
+            #self.rest_api.get_account() 
+            #print(f"Successfully connected to Alpaca REST API at {self.base_rest_url}.")
+        except APIException as e:
             print(f"FATAL: Failed to connect to Alpaca REST API: {e}. Check credentials and API URL.")
             raise
         except Exception as e:
@@ -194,7 +193,7 @@ class AlpacaData:
                 else:
                     print(f"INFO: Alpaca REST API returned no data for {symbol} (Timeframe: {timeframe_str}).")
             
-            except APIError as e: # Specific Alpaca API errors
+            except APIException as e: # Specific Alpaca API errors
                 if e.code == 40410000: # Symbol not found
                      print(f"INFO: Symbol {symbol} not found on Alpaca (Code: {e.code}). Will try yfinance.")
                 elif e.code == 40010001 and "is not a tradable asset" in str(e): # Not tradable
