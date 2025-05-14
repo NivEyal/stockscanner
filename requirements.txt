@@ -7,6 +7,6 @@ streamlit==1.33.0
 urllib3==1.26.16
 requests==2.32.0
 datetime
-alpaca-trade-api==2.3.0
+alpaca-trade-api
 tradingview-ta
 yfinance
