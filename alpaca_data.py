@@ -12,7 +12,6 @@ from alpaca.trading.client import TradingClient
 from alpaca.trading.requests import MarketOrderRequest
 from alpaca.trading.enums import OrderSide, TimeInForce
 from alpaca.data.historical import StockHistoricalDataClient
-from alpaca.common.exceptions import APIException
 from alpaca.data.timeframe import TimeFrameUnit
 from alpaca.data.requests import StockBarsRequest
 from alpaca.data.enums import Adjustment
@@ -32,7 +31,7 @@ class AlpacaData:
             # Test connection
             #self.rest_api.get_account() 
             #print(f"Successfully connected to Alpaca REST API at {self.base_rest_url}.")
-        except APIException as e:
+        except Exception as e:
             print(f"FATAL: Failed to connect to Alpaca REST API: {e}. Check credentials and API URL.")
             raise
         except Exception as e:
@@ -193,7 +192,7 @@ class AlpacaData:
                 else:
                     print(f"INFO: Alpaca REST API returned no data for {symbol} (Timeframe: {timeframe_str}).")
             
-            except APIException as e: # Specific Alpaca API errors
+            except Exception as e: # Specific Alpaca API errors
                 if e.code == 40410000: # Symbol not found
                      print(f"INFO: Symbol {symbol} not found on Alpaca (Code: {e.code}). Will try yfinance.")
                 elif e.code == 40010001 and "is not a tradable asset" in str(e): # Not tradable
