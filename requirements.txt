@@ -10,3 +10,5 @@ datetime
 alpaca-trade-api
 tradingview-ta
 yfinance
+alpaca-py>=0.10.0
+
