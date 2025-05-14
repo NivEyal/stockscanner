@@ -7,7 +7,15 @@ import yfinance as yf
 from datetime import datetime, timedelta
 import os
 import time # For retry delay
-from alpaca_trade_api.rest import REST, TimeFrame, TimeFrameUnit, APIError # For Alpaca REST API
+from alpaca.data.timeframe import TimeFrame
+from alpaca.data.historical import StockHistoricalDataClient
+from alpaca.data.requests import StockBarsRequest
+from alpaca.data.enums import Adjustment
+
+# Optional if you need trading:
+from alpaca.trading.client import TradingClient
+from alpaca.trading.enums import OrderSide, TimeInForce
+
 
 class AlpacaData:
     def __init__(self):
